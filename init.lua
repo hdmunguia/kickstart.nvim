@@ -837,31 +837,31 @@ require('lazy').setup(
       end,
     },
 
-    { -- You can easily change to a different colorscheme.
-      -- Change the name of the colorscheme plugin below, and then
-      -- change the command in the config to whatever the name of that colorscheme is.
-      --
-      -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-      'folke/tokyonight.nvim',
-      priority = 1000, -- Make sure to load this before all the other start plugins.
-      init = function()
-        -- Load the colorscheme here.
-        -- Like many other themes, this one has different styles, and you could load
-        -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-        vim.cmd.colorscheme 'tokyonight-night'
-
-        -- You can configure highlights by doing something like:
-        vim.cmd.hi 'Comment gui=none'
-      end,
-    },
-    -- {
-    --   -- Theme inspired by Atom (HDM)
-    --   'catppuccin/nvim',
-    --   as = 'catppuccin',
-    --   config = function()
-    --     vim.cmd.colorscheme 'catppuccin'
+    -- { -- You can easily change to a different colorscheme.
+    --   -- Change the name of the colorscheme plugin below, and then
+    --   -- change the command in the config to whatever the name of that colorscheme is.
+    --   --
+    --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+    --   'folke/tokyonight.nvim',
+    --   priority = 1000, -- Make sure to load this before all the other start plugins.
+    --   init = function()
+    --     -- Load the colorscheme here.
+    --     -- Like many other themes, this one has different styles, and you could load
+    --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+    --     vim.cmd.colorscheme 'tokyonight-night'
+    --
+    --     -- You can configure highlights by doing something like:
+    --     vim.cmd.hi 'Comment gui=none'
     --   end,
     -- },
+    {
+      -- Theme inspired by Atom (HDM)
+      'catppuccin/nvim',
+      as = 'catppuccin',
+      config = function()
+        vim.cmd.colorscheme 'catppuccin'
+      end,
+    },
 
     -- Highlight todo, notes, etc in comments
     { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -994,6 +994,13 @@ require('lazy').setup(
         'nvim-telescope/telescope.nvim',
       },
     },
+    { -- HDM https://github.com/mrcjkb/nvim-lastplace
+      'mrcjkb/nvim-lastplace',
+      init = function()
+        -- optional configuration
+      end,
+    },
+    -- { 'nvim-tree/nvim-web-devicons' },
 
     -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
     -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -1055,6 +1062,8 @@ vim.o.ai = true
 
 vim.o.scrolloff = 8
 
+vim.g.node_host_prog = '/home2/david/.nvm/versions/node/v22.12.0/bin/neovim-node-host'
+
 -- copilot#Dismiss()    '<C-]> copilot#Dismiss() . "\<C-]>"'
 -- copilot#Next()       '<M-]>'
 -- copilot#Previous()   '<M-[>'
@@ -1063,13 +1072,13 @@ vim.o.scrolloff = 8
 -- copilot#AcceptLine() '<M-C-Right>'
 -- vim.api.nvim_set_keymap('i', '<C-w>', 'copilot#Accept("<CR>")', { expr = true, silent = true })
 
--- vim.api.nvim_create_autocmd('BufWritePre', {
---   pattern = { '*.c', '*.cc', '*.cpp', '*.h', '*.hpp' }, -- You can adjust the file patterns as needed
---   callback = function()
---     -- Replace with vim.lsp.buf.format() if you're using Neovim 0.8 or newer
---     -- vim.lsp.buf.format(nil, 1000) -- The second argument is the timeout in milliseconds
---     vim.lsp.buf.format(nil) -- The second argument is the timeout in milliseconds
---   end,
--- })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = { '*.c', '*.cc', '*.cpp', '*.h', '*.hpp' }, -- You can adjust the file patterns as needed
+  callback = function()
+    -- Replace with vim.lsp.buf.format() if you're using Neovim 0.8 or newer
+    -- vim.lsp.buf.format(nil, 1000) -- The second argument is the timeout in milliseconds
+    vim.lsp.buf.format(nil)
+  end,
+})
 
 --
